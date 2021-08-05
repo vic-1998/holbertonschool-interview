@@ -6,4 +6,4 @@
 Describe your project
 
 
-Made with :heart: by <a href="https://github.com/{{vic-1998}}" target="_blank">{{Victor Manuel Plaza}}</a>
+Made with by <a href="https://github.com/{{vic-1998}}" target="_blank">{{Victor Manuel Plaza}}</a>
