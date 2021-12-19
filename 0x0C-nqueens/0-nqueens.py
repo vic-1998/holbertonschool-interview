@@ -1,41 +1,46 @@
 #!/usr/bin/python3
-
+"""The N Queens Problem"""
 import sys
 
 
-def nqueens(queens, cl_queens, sum):
-    """Finds all valid queen column positions
+def queens_potitions(N, r, queens):
+    """Checks if [row, col] is a safe position on the board
     """
-    count = len(queens)
-    if count == n:
-        queen_col.append(queens)
-        return None
-    for resolve in range(n):
-        if resolve not in queens and count - resolve not in cl_queens and count + resolve not in sum:
-            nqueens(queens + [resolve], cl_queens + [count - resolve], sum + [count + resolve])
+    for i in range(N):
+        flag = 0
+        for j in queens:
+            if abs(i - j[1]) == abs(r - j[0]):
+                flag = 1
+                break
+            if i == j[1]:
+                flag = 1
+                break
 
-
-def parse_argv():
-    """Checks for usage errors"""
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-    if not sys.argv[1].isdigit():
-        print("N must be a number")
-        sys.exit(1)
-    n = int(sys.argv[1])
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-    return n
+        if flag == 0:
+            queens.append([r, i])
+            if r != N - 1:
+                queens_potitions(N, r + 1, queens)
+            else:
+                print(queens)
+            queens.pop()
 
 
 if __name__ == "__main__":
-    n = parse_argv()
-    queen_col = []
-    nqueens([], [], [])
-    for row in range(len(queen_col)):
-        queen_pos = []
-        for col in range(len(queen_col[row])):
-            queen_pos.append([col, queen_col[row][col]])
-        print(queen_pos)
+
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+
+    if isinstance(sys.argv[1], int):
+        print("N must be a number")
+        exit(1)
+
+    N = int(sys.argv[1])
+
+    if N < 4:
+        print("N must be at least 4")
+        exit(1)
+
+    r = 0
+    queens = []
+    queens_potitions(N, r, queens)
