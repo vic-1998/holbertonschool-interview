@@ -1,46 +1,64 @@
 #!/usr/bin/python3
 """The N Queens Problem"""
-import sys
+if __name__ == '__main__':
 
-
-def queens_potitions(N, r, queens):
-    """Checks if [row, col] is a safe position on the board
-    """
-    for i in range(N):
-        flag = 0
-        for j in queens:
-            if abs(i - j[1]) == abs(r - j[0]):
-                flag = 1
-                break
-            if i == j[1]:
-                flag = 1
-                break
-
-        if flag == 0:
-            queens.append([r, i])
-            if r != N - 1:
-                queens_potitions(N, r + 1, queens)
-            else:
-                print(queens)
-            queens.pop()
-
-
-if __name__ == "__main__":
+    import sys
 
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
-        exit(1)
-
-    if isinstance(sys.argv[1], int):
+        sys.exit(1)
+    try:
+        size = int(sys.argv[1])
+    except BaseException:
         print("N must be a number")
-        exit(1)
-
-    N = int(sys.argv[1])
-
-    if N < 4:
+        sys.exit(1)
+    if size < 4:
         print("N must be at least 4")
-        exit(1)
+        sys.exit(1)
 
-    r = 0
-    queens = []
-    queens_potitions(N, r, queens)
+    def startSolve():
+        data = [[0 for j in range(size)] for i in range(size)]
+        checkRecursive(data, 0)
+        return
+
+    def checkRecursive(data, c):
+        if (c == size):
+            solution(data)
+            return True
+        ret = False
+        for i in range(size):
+            if (checkPosition(data, i, c)):
+                data[i][c] = 1
+                ret = checkRecursive(data, c + 1) or ret
+                data[i][c] = 0
+        return ret
+
+    def checkPosition(data, r, c):
+        for i in range(c):
+            if (data[r][i]):
+                return False
+        i = r
+        j = c
+        while i >= 0 and j >= 0:
+            if(data[i][j]):
+                return False
+            i = i - 1
+            j = j - 1
+        i = r
+        j = c
+        while j >= 0 and i < size:
+            if(data[i][j]):
+                return False
+            i = i + 1
+            j = j - 1
+        return True
+
+    def solution(data):
+        solve = []
+        for i in range(size):
+            for j in range(size):
+                if(data[i][j] is 1):
+                    solve.append([i, j])
+        print(solve)
+        solve.clear()
+    startSolve()
